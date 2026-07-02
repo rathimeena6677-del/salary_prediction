@@ -109,7 +109,14 @@ if predict_clicked:
                 f"₹ {upper['Salary'].values[0]:,.0f}"
             )
     elif not lower.empty and lower["Level"].values[0] == level:
-        st.caption(f"This matches an actual row in the dataset: Level {level} → ₹ {lower['Salary'].values[0]:,.0f}")
+        actual_salary = lower["Salary"].values[0]
+        diff = prediction - actual_salary
+        st.caption(
+            f"Level {level} exists in the dataset with an **actual** salary of ₹ {actual_salary:,.0f}. "
+            f"The model's prediction differs by ₹ {diff:,.0f} — this is normal: with only "
+            f"{len(df)} data points, a degree-{degree} polynomial (R² = {r2:.4f}) fits closely "
+            f"but not perfectly through every point."
+        )
 else:
     st.info("Set the degree and employee level in the sidebar, then click **Predict Salary**.")
 
